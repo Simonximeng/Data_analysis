@@ -1,3 +1,6 @@
+-- Creat 3 basic tables in mock_staff database
+-- company_divisions, company_regions, staff
+
 -- run the following into the Mysql terminal
 --source PATH/mock_staff.sql
 
@@ -10,6 +13,37 @@ create table company_divisions (
     company_division varchar(100),
     primary key (department)
   );
+
+create table company_regions (
+   region_id int,
+   company_regions varchar(20),
+   country varchar(20),
+   primary key (region_id)
+  );
+
+create table staff
+  (
+      id integer,
+      last_name varchar(100),
+      email varchar(200),
+      gender varchar(10),
+      department varchar(100),
+      start_date date,
+      salary integer,
+      job_title varchar(100),
+      region_id int,
+      primary key (id)
+  );
+-- date follows the format: YYYY-MM-DD
+-- but the current data are written in the format of MM/DD/YYYY
+-- For now changed to 
+-- start_date varchar(10) instead of 
+-- start_date date
+-- and the above did not work
+
+-- I used Vim macro to insert STR_TO_DATE
+
+
 
 insert into company_divisions values ('Automotive','Auto & Hardware');
 insert into company_divisions values ('Baby','Domestic');
@@ -33,13 +67,7 @@ insert into company_divisions values ('Sports','Games & Sports');
 insert into company_divisions values ('Tools','Auto & Hardware');
 insert into company_divisions values ('Toys','Games & Sports');
 
-
-create table company_regions (
-   region_id int,
-   company_regions varchar(20),
-   country varchar(20),
-   primary key (region_id)
-  );
+----------------------------------------------------
 
 insert into company_regions values (1, 'Northeast', 'USA');
 insert into company_regions values (2, 'Southeast', 'USA');
@@ -50,27 +78,7 @@ insert into company_regions values (6, 'Quebec', 'Canada');
 insert into company_regions values (7, 'Nova Scotia', 'Canada');
 
 
-create table staff
-  (
-      id integer,
-      last_name varchar(100),
-      email varchar(200),
-      gender varchar(10),
-      department varchar(100),
-      start_date date,
-      salary integer,
-      job_title varchar(100),
-      region_id int,
-      primary key (id)
-  );
--- date follows the format: YYYY-MM-DD
--- but the current data are written in the format of MM/DD/YYYY
--- For now changed to 
--- start_date varchar(10) instead of 
--- start_date date
--- and the above did not work
-
--- I used Vim macro to insert STR_TO_DATE
+---------------------------------------------------
 
 insert into staff values (1,'Kelley','rkelley0@soundcloud.com','Female','Computers',STR_TO_DATE('10/2/2009','%m/%d/%Y'),67470,'Structural Engineer',2);
 insert into staff values (2,'Armstrong','sarmstrong1@infoseek.co.jp','Male','Sports',STR_TO_DATE('3/31/2008','%m/%d/%Y'),71869,'Financial Advisor',2);
