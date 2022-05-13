@@ -1,5 +1,7 @@
 
+.ipynb_checkpoints
 
+# dotenv to store keys and passwords for API and Mysql db 
 .env 
 
 *key
