@@ -15,6 +15,6 @@
 
 ## Projects
 
-- Dashboard: crime_dash
+- Dashboard: crime_dash(Jupyternotebook), 
 - Visualiztion: pokemon, fuel, crime_dash, movie
 - SQL: sql_practice
