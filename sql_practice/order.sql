@@ -1,0 +1,53 @@
+-- UNION combines the result set of two or more SELECT (only distinct values)
+-- UNION ALL are similar but allow duplicate values 
+
+SELECT AGENT_NAME 
+FROM AGENTS
+UNION
+SELECT 
+CUST_NAME
+FROM CUSTOMER
+ORDER BY AGENT_NAME;
+
+SELECT AGENT_NAME 
+FROM AGENTS a;
+
+SELECT CUST_NAME 
+FROM CUSTOMER c 
+
+-- ROWNUM() returns the row number of the row's data as extracted from the DB
+-- therefore nested select a ordered queries to choose top-N queries
+
+
+SELECT SUM(OPENING_AMT), AVG(OPENING_AMT),GRADE, ROWNUM(), COUNT(*) 
+FROM CUSTOMER 
+GROUP BY GRADE
+ORDER BY SUM(OPENING_AMT) DESC;
+
+SELECT 
+	SUM(OPENING_AMT), 
+	GRADE, 
+	RANK() OVER (
+	ORDER BY SUM(OPENING_AMT) DESC) rank
+FROM CUSTOMER
+GROUP BY GRADE
+ORDER BY rank ASC;
+
+SELECT 
+	SUM(PAYMENT_AMT) as total_pay, 
+	AGENT_CODE,
+	RANK() OVER (
+	ORDER BY SUM(PAYMENT_AMT) DESC)
+FROM CUSTOMER 
+GROUP BY AGENT_CODE
+ORDER BY total_pay DESC;
+
+SELECT 
+	SUM(PAYMENT_AMT) as total_pay, 
+	AGENT_CODE,
+	RANK() OVER ( PARTITION BY SUM
+	ORDER BY SUM(PAYMENT_AMT) DESC)
+FROM CUSTOMER 
+GROUP BY AGENT_CODE
+ORDER BY total_pay DESC;
+

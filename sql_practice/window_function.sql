@@ -1,6 +1,6 @@
 /******** Windows Functions and Ordered Data ************/
 
-
+USE mock_staff;
 --------------------- OVER (PARTITION BY) ---------------------------
 
 /* employee salary vs average salary of his/her department */
@@ -11,9 +11,10 @@ SELECT
 	start_date,
 	AVG(salary) OVER (PARTITION BY department) AS department_average,
 	MAX(salary) OVER (PARTITION BY department) AS department_max,
-	MIN(salary) OVER (PARTITION BY department) AS department_min,
+	MIN(salary) OVER (PARTITION BY department) AS department_min
 FROM staff;
 
+SELECT * FROM staff
 
 
 ---------------------  FIRST_VALUE()  ---------------------------
@@ -35,6 +36,18 @@ SELECT
 	MAX(salary) OVER (PARTITION BY department)
 FROM staff
 ORDER BY department ASC, salary DESC;
+
+-- if use group by, then the aggregated value (MAX() here) is the same
+-- but all other, original values are missed.
+SELECT
+	department,
+	last_name,
+	salary,
+	MAX(salary) 
+FROM staff
+GROUP BY department
+ORDER BY department ASC, salary DESC;
+
 
 ---------------
 
@@ -123,3 +136,12 @@ SELECT
 	salary,
 	NTILE(10) OVER(PARTITION BY department ORDER BY salary DESC)
 FROM staff;
+
+WITH T AS (
+	SELECT id, last_name
+	FROM staff
+	ORDER BY id
+)
+SELECT * FROM T;
+
+
